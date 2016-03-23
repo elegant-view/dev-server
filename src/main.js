@@ -20,7 +20,7 @@ export function start(options={}) {
     app.use(getBabelHandler(options));
     app.use(serveStatic(options.rootPath));
 
-    let port = process.argv[2] || 3000;
+    let port = process.argv[2] || options.port || 3000;
     http.createServer(app).listen(port);
     winston.info('server is listening on port:', port);
 }

@@ -3,7 +3,7 @@
  * @author yibuyisheng(yibuyisheng@163.com)
  */
 
-import babelCore from 'babel-core';
+import * as babelCore from 'babel-core';
 import * as util from '../util';
 import fs from 'fs';
 import winston from 'winston';

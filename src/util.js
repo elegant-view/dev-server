@@ -3,7 +3,7 @@ import path from 'path';
 import u from 'underscore';
 
 export function convertToLocalPath(urlPath, rootPath) {
-    return path.resolve(urlPath, rootPath);
+    return path.join(rootPath, urlPath);
 }
 
 export function getUrlPath(request) {
