@@ -28,7 +28,7 @@ export default function getHandler(options) {
             babelCore.transformFile(localPath, babel.compileOptions, (err, result) => {
                 if (err) {
                     winston.error(err);
-                    context.end(err.message, null, 500);
+                    context.end();
                     return reject(err);
                 }
 
