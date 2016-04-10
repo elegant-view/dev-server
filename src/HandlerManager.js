@@ -17,15 +17,14 @@ export default class HandlerManager {
     handle(context) {
         return find(this[HANDLERS], handler => {
             return Promise.resolve(handler(context))
-                .then(() => {
-                    if (context.hasContent()) {
-                        context.end();
-                    }
-                })
                 .catch(error => {
                     winston.error(error);
                     return true;
                 });
+        }).then(() => {
+            if (context.hasContent()) {
+                context.end();
+            }
         });
     }
 }
