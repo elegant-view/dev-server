@@ -97,9 +97,9 @@ export default class Context {
         }
 
         this[RES].setHeader('Content-Type', {
-            JS_FILE: 'text/javascript',
-            CSS_FILE: 'text/css',
-            HTML_FILE: 'text/html'
+            [JS_FILE]: 'text/javascript',
+            [CSS_FILE]: 'text/css',
+            [HTML_FILE]: 'text/html'
         }[this[FILE_TYPE]] || 'text/plain');
         this[RES].statusCode = 200;
         this[RES].write(this[FILE_CONTENT]);
