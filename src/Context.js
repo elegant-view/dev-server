@@ -27,35 +27,23 @@ export default class Context {
 
     loadFile(localPath) {
         return new Promise((resolve, reject) => {
-            fs.access(localPath, fs.R_OK, error => {
+            fs.readFile(localPath, (error, data) => {
                 if (error) {
                     return reject(error);
                 }
 
-                resolve();
-            });
-        }).then(() => {
-            return new Promise((resolve, reject) => {
-                fs.readFile(localPath, (error, data) => {
-                    if (error) {
-                        return reject(error);
-                    }
+                this[ORIGIN_FILE_CONTENT] = data;
+                this[FILE_CONTENT] = data;
+                this[FILE_PATH] = localPath;
 
-                    this[ORIGIN_FILE_CONTENT] = data;
-                    this[FILE_CONTENT] = data;
-                    this[FILE_PATH] = localPath;
-
-                    let suffix = localPath.slice(localPath.lastIndexOf('.') + 1, localPath.length).toLowerCase();
-                    this[FILE_TYPE] = {
-                        css: CSS_FILE,
-                        html: HTML_FILE,
-                        js: JS_FILE,
-                        htm: HTML_FILE
-                    }[suffix];
-                    resolve(data);
-                });
-            }).catch(error => {
-                winston.error(error);
+                let suffix = localPath.slice(localPath.lastIndexOf('.') + 1, localPath.length).toLowerCase();
+                this[FILE_TYPE] = {
+                    css: CSS_FILE,
+                    html: HTML_FILE,
+                    js: JS_FILE,
+                    htm: HTML_FILE
+                }[suffix];
+                resolve(data);
             });
         });
     }

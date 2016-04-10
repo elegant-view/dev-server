@@ -33,9 +33,8 @@ export function start(options={}) {
 
         let context = new Context(req, res);
         context.loadFile(localPath)
-            .then(() => {
-                return handlerManager.handle(context);
-            })
+            .catch(error => winston.info(`load file failed. ${error.message}`))
+            .then(() => handlerManager.handle(context))
             .then(() => {
                 if (!context.isEnd()) {
                     staticHandler(req, res, next);
