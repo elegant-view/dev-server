@@ -9,7 +9,6 @@ import serveStatic from 'serve-static';
 import babel from './handlers/babel';
 import winston from 'winston';
 import Context from './Context';
-import * as util from './util';
 import HandlerManager from './HandlerManager';
 import jasmine from './handlers/jasmine';
 

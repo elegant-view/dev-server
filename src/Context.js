@@ -4,7 +4,7 @@
  */
 
 import fs from 'fs';
-import util from './util';
+import * as util from './util';
 
 const REQ = Symbol('req');
 const RES = Symbol('res');
