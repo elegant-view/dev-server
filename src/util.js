@@ -6,6 +6,7 @@
 import url from 'url';
 import path from 'path';
 import u from 'underscore';
+import fs from 'fs';
 
 export function convertToLocalPath(urlPath, rootPath) {
     return path.join(rootPath, urlPath);
@@ -47,4 +48,15 @@ export function find(arr, iteraterFn, context) {
                 return result ? result : next(arr, iteraterFn, context, index + 1);
             });
     }
+}
+
+export function readFile(...args) {
+    return new Promsie((resolve, reject) => {
+        fs.readFile(...args, (error, content) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(content);
+        });
+    });
 }
