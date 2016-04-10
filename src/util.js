@@ -51,7 +51,7 @@ export function find(arr, iteraterFn, context) {
 }
 
 export function readFile(...args) {
-    return new Promsie((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         fs.readFile(...args, (error, content) => {
             if (error) {
                 return reject(error);
