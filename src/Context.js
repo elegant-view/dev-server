@@ -4,7 +4,7 @@
  */
 
 import fs from 'fs';
-import winston from 'winston';
+import util from './util';
 
 const REQ = Symbol('req');
 const RES = Symbol('res');
@@ -23,6 +23,15 @@ export default class Context {
         this[REQ] = req;
         this[RES] = res;
         this[IS_RESPONSED] = false;
+    }
+
+    getUrlPath() {
+        return util.getUrlPath(this[REQ]);
+    }
+
+    getLocalPath(rootPath) {
+        let urlPath = this.getUrlPath();
+        return util.convertToLocalPath(urlPath, rootPath);
     }
 
     loadFile(localPath) {

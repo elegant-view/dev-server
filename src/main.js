@@ -27,11 +27,12 @@ export function start(options={}) {
 
     let app = connect();
     app.use((req, res, next) => {
-        let urlPath = util.getUrlPath(req);
-        let localPath = util.convertToLocalPath(urlPath, options.rootPath);
+        let context = new Context(req, res);
+
+        let urlPath = context.getUrlPath();
+        let localPath = context.getLocalPath(options.rootPath);
         winston.info(req.method, urlPath, localPath);
 
-        let context = new Context(req, res);
         context.loadFile(localPath)
             .catch(error => winston.info(`load file failed. ${error.message}`))
             .then(() => handlerManager.handle(context))

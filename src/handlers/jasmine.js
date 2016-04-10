@@ -4153,8 +4153,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 export default function getHandler() {
     return function handler(context) {
-        let localPath = context.getFilePath();
-        if (localPath === 'jasmine.js') {
+        if (context.getUrlPath() === '/jasmine.js') {
             let code = `
                 var style = document.createElement('style');
                 document.head.appendChild(style);
