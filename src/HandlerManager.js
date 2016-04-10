@@ -12,7 +12,6 @@ const HANDLERS = Symbol('handlers');
 export default class HandlerManager {
     registerHandlers(handlers) {
         this[HANDLERS] = u.filter(handlers, handler => u.isFunction(handler));
-        console.log(this[HANDLERS]);
     }
 
     handle(context) {

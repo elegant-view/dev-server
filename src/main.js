@@ -11,6 +11,7 @@ import winston from 'winston';
 import Context from './Context';
 import * as util from './util';
 import HandlerManager from './HandlerManager';
+import jasmine from './handlers/jasmine';
 
 export function start(options={}) {
     if (typeof options !== 'object') {
@@ -21,6 +22,7 @@ export function start(options={}) {
 
     let handlerManager = new HandlerManager();
     handlerManager.registerHandlers([babel(options)]);
+    handlerManager.registerHandlers([jasmine(options)]);
     let staticHandler = serveStatic(options.rootPath);
 
     let app = connect();

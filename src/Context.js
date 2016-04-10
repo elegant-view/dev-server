@@ -104,6 +104,8 @@ export default class Context {
         this[RES].statusCode = 200;
         this[RES].write(this[FILE_CONTENT]);
         this[RES].end();
+
+        this[IS_RESPONSED] = true;
     }
 
     isEnd() {
