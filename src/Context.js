@@ -44,6 +44,14 @@ export default class Context {
                     this[ORIGIN_FILE_CONTENT] = data;
                     this[FILE_CONTENT] = data;
                     this[FILE_PATH] = localPath;
+
+                    let suffix = localPath.slice(localPath.lastIndexOf('.') + 1, localPath.length).toLowerCase();
+                    this[FILE_TYPE] = {
+                        css: CSS_FILE,
+                        html: HTML_FILE,
+                        js: JS_FILE,
+                        htm: HTML_FILE
+                    }[suffix];
                     resolve(data);
                 });
             }).catch(error => {
