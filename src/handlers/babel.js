@@ -14,11 +14,13 @@ export default function getHandler(options) {
     let babel = options.babel || {};
     let include = babel.include || [];
     return function handler(context) {
-        let localPath = context.getFilePath();
-        localPath = path.resolve(localPath);
-        if (!util.isMatch(include, localPath)) {
+        let urlPath = context.getUrlPath();
+        if (!util.isMatch(include, urlPath)) {
             return;
         }
+
+        let localPath = context.getFilePath();
+        localPath = path.resolve(localPath);
 
         return new Promise((resolve, reject) => {
             let packageConfig = findConfig(localPath.slice(0, localPath.lastIndexOf(path.sep)));
