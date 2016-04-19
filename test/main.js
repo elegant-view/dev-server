@@ -7,5 +7,9 @@ server.start({
     babel: {
         include: [/test\/test\.js$/],
         compileOptions: babelCompileOptions
+    },
+    sass: {
+        include: [/test\/.*\.scss$/],
+        compileOptions: {}
     }
 });

@@ -7,6 +7,7 @@ import connect from 'connect';
 import http from 'http';
 import serveStatic from 'serve-static';
 import babel from './handlers/babel';
+import sass from './handlers/sass';
 import winston from 'winston';
 import Context from './Context';
 import HandlerManager from './HandlerManager';
@@ -21,6 +22,7 @@ export function start(options={}) {
 
     let handlerManager = new HandlerManager();
     handlerManager.registerHandlers([babel(options)]);
+    handlerManager.registerHandlers([sass(options)]);
     handlerManager.registerHandlers([jasmine(options)]);
     let staticHandler = serveStatic(options.rootPath);
 
