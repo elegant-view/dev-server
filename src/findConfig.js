@@ -13,7 +13,7 @@ export default function findConfig(relativeDir) {
         jsonData = require(fullPath);
     }
     catch (error) {
-        winston.info(`try to load package.json under \`${fullPath}\` but failed!`, error);
+        winston.info(`try to load package.json under \`${fullPath}\` but failed!`);
     }
 
     return relativeDir === path.sep || jsonData
