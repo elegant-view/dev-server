@@ -9,10 +9,13 @@ import winston from 'winston';
 import findConfig from '../findConfig';
 import path from 'path';
 import u from 'underscore';
+import fs from 'fs';
 
 export default function getHandler(options) {
     let babel = options.babel || {};
     let include = babel.include || [];
+
+    const cache = {};
     return function handler(context) {
         let urlPath = context.getUrlPath();
         if (!util.isMatch(include, urlPath)) {
@@ -27,15 +30,35 @@ export default function getHandler(options) {
             if (packageConfig && packageConfig.ev && packageConfig.ev.babel) {
                 babel.compileOptions = u.extend({}, babel.compileOptions, packageConfig.ev.babel.compileOptions);
             }
-            babelCore.transformFile(localPath, babel.compileOptions, (err, result) => {
-                if (err) {
-                    winston.error(err);
+
+            fs.stat(localPath, (error, stats) => {
+                if (error) {
+                    winston.error(error);
                     context.end();
-                    return reject(err);
+                    return reject(error);
                 }
 
-                context.js(result.code);
-                resolve();
+                if (cache[localPath] && cache[localPath].time >= stats.mtime.getTime()) {
+                    context.js(cache[localPath].code);
+                    resolve();
+                }
+                else {
+                    babelCore.transformFile(localPath, babel.compileOptions, (err, result) => {
+                        if (err) {
+                            winston.error(err);
+                            context.end();
+                            return reject(err);
+                        }
+
+                        context.js(result.code);
+                        resolve();
+
+                        cache[localPath] = {
+                            time: Date.now(),
+                            code: result.code
+                        };
+                    });
+                }
             });
         });
     };
